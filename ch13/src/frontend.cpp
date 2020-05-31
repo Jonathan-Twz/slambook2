@@ -13,6 +13,10 @@
 #include "myslam/map.h"
 #include "myslam/viewer.h"
 
+#include <iostream>
+#include <fstream>
+using namespace std;
+
 namespace myslam {
 
 Frontend::Frontend() {
@@ -217,6 +221,13 @@ int Frontend::EstimateCurrentPose() {
     current_frame_->SetPose(vertex_pose->estimate());
 
     LOG(INFO) << "Current Pose = \n" << current_frame_->Pose().matrix();
+
+// ADD by jonathan
+    // fstream outfile;
+    // outfile.open("/home/jonathan/slambook2/ch13/est_pose.txt", ios::out | ios::app);
+    // outfile << current_frame_->Pose().matrix()<<"\n";
+    // outfile.close(); 
+// END
 
     for (auto &feat : features) {
         if (feat->is_outlier_) {

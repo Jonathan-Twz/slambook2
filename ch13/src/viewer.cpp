@@ -7,6 +7,9 @@
 
 #include <pangolin/pangolin.h>
 #include <opencv2/opencv.hpp>
+#include <iostream>
+#include <fstream>
+// using namespace std;
 
 namespace myslam {
 
@@ -60,6 +63,11 @@ void Viewer::ThreadLoop() {
         if (current_frame_) {
             DrawFrame(current_frame_, green);
             FollowCurrentFrame(vis_camera);
+
+            std::fstream outfile;
+            outfile.open("/home/jonathan/slambook2/ch13/est_pose.txt", std::ios::out | std::ios::app);
+            outfile << current_frame_->Pose().matrix()<<"\n";
+            outfile.close(); 
 
             cv::Mat img = PlotFrameImage();
             cv::imshow("image", img);
